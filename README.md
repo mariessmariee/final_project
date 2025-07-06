@@ -1,53 +1,54 @@
-# Leftover Chef
+# 🍽️ Leftover Chef
 
-Turn random leftovers into tasty meals right from your terminal.  
-Enter ingredients you have, and Leftover Chef scrapes a few public recipe sites, scores each recipe by ingredient overlap, and shows you the best matches.
+*Turn random fridge finds into instant dinner ideas.*
+
+Leftover Chef is a Python script that asks what ingredients you have, scrapes a handful of recipe sites, and shows the dishes that use the most of your list, saving you time, money, and food waste.
+
+<p align="center">
+  <!-- Drop a GIF or screenshot called demo.gif in media/ to show it off -->
+  <img src="media/demo.gif" alt="Leftover Chef demo" width="700">
+</p>
 
 ---
 
-## Installation
+## ✨ Features
+- **Instant suggestions** – type `tomato, onion, pasta…`, get recipes in seconds.  
+- **Ingredient scoring** – dishes are ranked by overlap with what you already own.  
+- **Portable** – runs anywhere Python 3.8+ is available.
+
+---
+
+## 🚀 Quick start
 
 ```bash
-# clone the repo
-git clone https://github.com/<your-username>/final_project.git
+# 1 Clone the repo
+git clone https://github.com/yourusername/final_project.git
 cd final_project
 
-# (optional) create & activate a virtual environment
+# 2 (optional) Create & activate a virtual environment
 python -m venv .venv
-source .venv/bin/activate      # Windows ➜ .venv\Scripts\activate
+source .venv/bin/activate     # Windows ➜ .venv\Scripts\activate
 
-# install required dependencies
+# 3 Install dependencies
 pip install -r requirements.txt
-```               <!-- ← THIS closes the Installation code block -->
+
+# 4 Run it
+python title.py
+```
 
 ---
 
-## Usage
+## ⚡ Usage
 
 ```bash
 python title.py
-```               <!-- ← THIS closes the Usage code block -->
-
-When prompted, type something like:
-
-```
-tomato, onion, pasta, cheese
 ```
 
-Leftover Chef will list the top-scoring recipes and the ingredients they match.
+When prompted, try something like:
 
----
+```
+pasta, onion, garlic, cheese
+```
 
-## Roadmap
-
-| Feature                         | Status      |
-|---------------------------------|-------------|
-| Basic CLI & scraping            | **Done**    |
-| Smarter ingredient matching     | In progress |
-| Save favourite recipes to CSV   | In progress |
-| Tiny Flask web UI               | Planned     |
-
----
-
-*Built for my Python course — happy cooking & coding!*
+Leftover Chef will print a ranked list of matching recipes and direct links.
 

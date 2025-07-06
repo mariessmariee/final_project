@@ -1,26 +1,24 @@
-"""
-Leftover Chef – Einstiegspunkt.
+from scraper import get_demo_recipe_list
+from matcher import score_recipe
 
-Aufruf:
-    python title.py
-"""
+def main():
+    ingredients_raw = input("Ingredients (comma-separated): ")
+    my_ingredients = [x.strip().lower() for x in ingredients_raw.split(",") if x.strip()]
 
-from helper import get_recipe_suggestions
-
-def main() -> None:
-    ingredients = input("Welche Zutaten hast du? (Komma-getrennt) > ").split(",")
-    cleaned = [i.strip().lower() for i in ingredients if i.strip()]
-    if not cleaned:
-        print("⚠️  Keine Zutaten eingegeben.")
+    if not my_ingredients:
+        print("No ingredients given – exiting.")
         return
 
-    recipes = get_recipe_suggestions(cleaned)
+    recipes = get_demo_recipe_list()
 
-    print("\nTop-Treffer:")
-    for i, rec in enumerate(recipes, 1):
-        print(f"{i}) {rec['title']} – passt zu: {', '.join(rec['matches'])}")
-        print(f"   {rec['url']}")
-    print("\nGuten Appetit!")
+    for r in recipes:
+        r["score"] = score_recipe(my_ingredients, r["ingredients"])
+
+    recipes.sort(key=lambda r: r["score"], reverse=True)
+
+    print("\nTop matches:")
+    for r in recipes:
+        print(f"- {r['title']} (score {r['score']}) :: {r['url']}")
 
 if __name__ == "__main__":
     main()

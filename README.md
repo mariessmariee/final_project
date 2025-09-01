@@ -31,6 +31,7 @@ source .venv/bin/activate     # Windows ➜ .venv\Scripts\activate
 
 # 3 Install dependencies
 pip install -r requirements.txt
+python -m spacy download en_core_web_sm
 
 # 4 Run it
 python title.py

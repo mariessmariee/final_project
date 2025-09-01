@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Tomato Pasta",
+    "ingredients": ["pasta", "tomatoes", "garlic", "olive oil", "cheese"],
+    "url": "https://example.com/tomato-pasta"
+  },
+  {
+    "title": "Cheesy Omelette",
+    "ingredients": ["eggs", "cheese", "onion", "butter"],
+    "url": "https://example.com/cheesy-omelette"
+  },
+  {
+    "title": "Chickpea Salad",
+    "ingredients": ["chickpeas", "cucumber", "tomato", "olive oil", "lemon"],
+    "url": "https://example.com/chickpea-salad"
+  }
+]

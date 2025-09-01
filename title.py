@@ -1,24 +1,26 @@
-from scraper import get_demo_recipe_list
-from matcher import score_recipe
+import json
+from helper import normalize_and_expand, score_recipe
+
+def load_recipes(path="data/recipes.json"):
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 def main():
-    ingredients_raw = input("Ingredients (comma-separated): ")
-    my_ingredients = [x.strip().lower() for x in ingredients_raw.split(",") if x.strip()]
+    ingredients = input("What do you have? (comma-separated) ")
+    my_ings = normalize_and_expand(ingredients.split(","))
+    recipes = load_recipes()
 
-    if not my_ingredients:
-        print("No ingredients given – exiting.")
-        return
-
-    recipes = get_demo_recipe_list()
-
+    scored = []
     for r in recipes:
-        r["score"] = score_recipe(my_ingredients, r["ingredients"])
+        recipe_ings = normalize_and_expand(r["ingredients"])
+        s = score_recipe(my_ings, recipe_ings)
+        scored.append((s, r))
 
-    recipes.sort(key=lambda r: r["score"], reverse=True)
+    scored.sort(key=lambda x: x[0], reverse=True)
 
     print("\nTop matches:")
-    for r in recipes:
-        print(f"- {r['title']} (score {r['score']}) :: {r['url']}")
+    for s, r in scored[:10]:
+        print(f"{s:>5}  {r['title']}  -> {r['url']}")
 
 if __name__ == "__main__":
     main()

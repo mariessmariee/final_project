@@ -1,55 +1,45 @@
 # 🍽️ Leftover Chef
 
-*Turn random fridge finds into instant dinner ideas.*
+Leftover Chef turns the ingredients you already have into instant dinner ideas.  
+Just type up to **three ingredients** and get a ranked list of real recipes with direct links — saving time, money, and reducing food waste.
 
-Leftover Chef is a Python script that asks what ingredients you have, scrapes a handful of recipe sites, and shows the dishes that use the most of your list, saving you time, money, and food waste.
+## ✨ What it does
 
-<p align="center">
-  <!-- Drop a GIF or screenshot called demo.gif in media/ to show it off -->
-  <img src="media/demo.gif" alt="Leftover Chef demo" width="700">
-</p>
+- **Ingredient validation** – only real ingredients are accepted  
+- **Smart matching** – recipes ranked by how many of your ingredients they use  
+- **Diet filters** – vegan/vegetarian filters available *(skips automatically if you already typed meat, fish, eggs, or dairy)*  
+- **Direct links** – jump straight to the recipe page  
+- **Favorites** – save your favorite recipes for later  
 
----
-
-## ✨ Features
-- **Instant suggestions** – type `tomato, onion, pasta…`, get recipes in seconds.  
-- **Ingredient scoring** – dishes are ranked by overlap with what you already own.  
-- **Portable** – runs anywhere Python 3.8+ is available.
-
----
-
-## 🚀 Quick start
+## 🚀 Quick Start
 
 ```bash
-# 1 Clone the repo
-git clone https://github.com/yourusername/final_project.git
-cd final_project
-
-# 2 (optional) Create & activate a virtual environment
 python -m venv .venv
-source .venv/bin/activate     # Windows ➜ .venv\Scripts\activate
-
-# 3 Install dependencies
+source .venv/bin/activate       # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
-
-# 4 Run it
 python title.py
 ```
 
 ---
 
-## ⚡ Usage
+## ⚡ How to use it
 
 ```bash
 python title.py
 ```
 
-When prompted, try something like:
+When prompted, enter your ingredients (up to three) like: 
 
 ```
-pasta, onion, garlic, cheese
+pasta, onion, garlic
 ```
+
+- Choose vegan/vegetarian options
+- Select how many recipes to display
+- Decide whether to show missing ingredients
+
 
 Leftover Chef will print a ranked list of matching recipes and direct links.
 
+## Enjoy finding dinner ideas in seconds!

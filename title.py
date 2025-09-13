@@ -2,7 +2,7 @@ import sys, json
 from pathlib import Path
 from typing import List, Dict
 from helper import normalize_and_expand, score_recipe, recipe_matches_filters, missing_ingredients, DEFAULT_WEIGHTS
-from api_client import search_by_ingredients
+from api_client import validate_to_vocab, search_by_ingredients
 
 FAV_PATH = Path("data/favorites.json")
 
@@ -80,17 +80,25 @@ def main():
         raw = input("\nWhat do you have? (empty to quit) ").strip()
         if not raw:
             break
-        user_tokens = parse_ingredients(raw, max_n=3)
+        raw_tokens = parse_ingredients(raw, max_n=3)
+        valid, invalid, suggest = validate_to_vocab(raw_tokens)
+        if invalid:
+            msg = "Invalid ingredient(s): " + ", ".join(invalid)
+            if suggest:
+                tips = "; ".join([f"{k} → {v}" for k, v in suggest.items()])
+                msg += " | Did you mean: " + tips
+            print(msg)
+            continue
         vegan = yesno_strict("Are you vegan?")
         vegetarian = False if vegan else yesno_strict("Are you vegetarian?")
         prioritize_fresh = yesno_strict("Should I prioritize fresh ingredients when ranking?")
         top_n = ask_int_1_10("How many recipes should I show")
         show_hints = yesno_strict("Show up to 3 missing ingredients per recipe?")
-        api_recipes = search_by_ingredients(user_tokens)
+        api_recipes = search_by_ingredients(valid)
         if not api_recipes:
             print("No recipes with a webpage source were found for your ingredients.")
             continue
-        expanded_for_score = normalize_and_expand(user_tokens)
+        expanded_for_score = normalize_and_expand(valid)
         weights = DEFAULT_WEIGHTS if prioritize_fresh else None
         ranked = []
         for r in api_recipes:

@@ -1,4 +1,6 @@
- import spacy
+try:
+    import spacy
+
     _NLP = spacy.load("en_core_web_sm", disable=["ner", "parser"])
     _USE_SPACY = True
 except Exception:

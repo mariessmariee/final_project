@@ -1,3 +1,6 @@
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[1]))
+
 from helper import normalize_and_expand, recipe_matches_filters, score_recipe
 
 def test_normalize_and_expand():

@@ -3,11 +3,10 @@ from typing import List, Dict, Any, Optional
 
 BASE = "https://www.themealdb.com/api/json/v1/1"
 
-def _get(url: str, params: Optional[dict] = None) -> dict:
+def _get(url: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     r = requests.get(url, params=params, timeout=20, headers={"User-Agent": "LeftoverChef/1.0"})
     r.raise_for_status()
     return r.json()
-
 
 def filter_by_ingredient(ingredient: str) -> List[Dict[str, Any]]:
     data = _get(f"{BASE}/filter.php", {"i": ingredient})

@@ -6,6 +6,25 @@ from api_client import validate_to_vocab, search_by_ingredients
 
 FAV_PATH = Path("data/favorites.json")
 
+# NEW: diet sets + detection
+MEAT = {
+    "beef","pork","chicken","turkey","lamb","veal","duck","goose","venison",
+    "bacon","ham","sausage","prosciutto","salami","chorizo","pepperoni"
+}
+SEAFOOD = {
+    "fish","salmon","tuna","shrimp","prawn","anchovy","sardine","mackerel","cod",
+    "crab","lobster","clam","oyster","scallop","octopus","squid"
+}
+DAIRY = {"milk","cheese","butter","yogurt","cream","ghee","buttermilk","whey"}
+EGGS = {"egg","eggs"}
+ANIMAL_EXTRAS = {"gelatin","lard","honey"}
+
+def detect_diet_from_inputs(valid_tokens):
+    s = set(valid_tokens)
+    non_vegan = bool(s & (MEAT | SEAFOOD | DAIRY | EGGS | ANIMAL_EXTRAS))
+    non_vegetarian = bool(s & (MEAT | SEAFOOD))
+    return non_vegan, non_vegetarian
+
 def yesno_strict(prompt: str) -> bool:
     ans = input(f"{prompt} (yes/no): ").strip().lower()
     if ans in {"y","yes"}:
@@ -89,8 +108,21 @@ def main():
                 msg += " | Did you mean: " + tips
             print(msg)
             continue
-        vegan = yesno_strict("Are you vegan?")
-        vegetarian = False if vegan else yesno_strict("Are you vegetarian?")
+
+        # NEW: auto-skip vegan/vegetarian if meat or seafood present
+        non_vegan, non_vegetarian = detect_diet_from_inputs(valid)
+        if non_vegan:
+            vegan = False
+        else:
+            vegan = yesno_strict("Are you vegan?")
+        if vegan:
+            vegetarian = False
+        else:
+            if non_vegetarian:
+                vegetarian = False
+            else:
+                vegetarian = yesno_strict("Are you vegetarian?")
+
         prioritize_fresh = yesno_strict("Should I prioritize fresh ingredients when ranking?")
         top_n = ask_int_1_10("How many recipes should I show")
         show_hints = yesno_strict("Show up to 3 missing ingredients per recipe?")
